@@ -2,7 +2,6 @@
   <div class="login">
     <div class="login-box">
       <img class="logo" src="../assets/logo.png" alt>
-
       <el-form class="loginForm" :model="loginForm" :rules="loginRules" ref="loginForm">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid" placeholder="请输入用户名"></el-input>
@@ -10,10 +9,10 @@
         <el-form-item @keyup.enter.native="loginSubmit" prop="password">
           <el-input v-model="loginForm.password" type="password" prefix-icon="el-icon-lock" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item>
+        <div>
           <el-button @click="loginSubmit" type="primary">提交</el-button>
           <el-button>重置</el-button>
-        </el-form-item>
+        </div>
       </el-form>
 
     </div>
@@ -41,7 +40,7 @@ export default {
     loginSubmit () {
       this.$refs.loginForm.validate(async ok => {
         if (ok) {
-          const { data: res } = await this.axios.post('http://127.0.0.1:11333/api/private/v1/login', this.loginForm)
+          const { data: res } = await this.axios.post('/login', this.loginForm)
           console.log(res)
           if (res.meta.status !== 200) return this.$message.error('登录失败')
           sessionStorage.setItem('token', res.data.token)
